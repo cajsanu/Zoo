@@ -19,15 +19,16 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-Fox fox = new("Perry", 4);
-Chicken chicken = new("Linda", 2);
+Fox fox1 = new("Perry", 4, Sex.male);
+Fox fox2 = new("Pernilla", 3, Sex.female);
+Chicken chicken = new("Linda", 2, Sex.female);
 
-List<IAnimal> animals = [fox, chicken];
+List<IAnimal> animals = [fox1, fox2, chicken];
 
 app.MapGet("/animals", () =>
 {
     Console.WriteLine("Getting animals");
-     if (animals == null || animals.Count == 0)
+    if (animals == null || animals.Count == 0)
     {
         return Results.Text("No animals");
     }
