@@ -18,8 +18,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseMiddleware<RequestLoggerMiddleware>();
-
+app.UseRequestLoggerMiddleware();
 
 Fox fox1 = new("Perry", 4, Sex.male);
 Fox fox2 = new("Pernilla", 3, Sex.female);

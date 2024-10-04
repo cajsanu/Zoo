@@ -1,14 +1,8 @@
 namespace ADayInTheZoo.Middleware;
 
-public class RequestLoggerMiddleware
+public class RequestLoggerMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    // Constructor with RequestDelegate parameter
-    public RequestLoggerMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
 
     // The InvokeAsync method (required)
     public async Task InvokeAsync(HttpContext context)
@@ -21,5 +15,14 @@ public class RequestLoggerMiddleware
 
         // Custom logic after the next middleware
         Console.WriteLine("Request logger finished");
+    }
+}
+
+public static class RequestLoggerMiddlewareExtensions
+{
+    public static IApplicationBuilder UseRequestLoggerMiddleware(
+        this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<RequestLoggerMiddleware>();
     }
 }
