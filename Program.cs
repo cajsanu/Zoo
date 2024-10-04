@@ -1,4 +1,5 @@
 using ADayInTheZoo.Interfaces;
+using ADayInTheZoo.Middleware;
 using ADayInTheZoo.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<RequestLoggerMiddleware>();
 
 
 Fox fox1 = new("Perry", 4, Sex.male);
@@ -33,9 +35,9 @@ app.MapGet("/animals", () =>
         return Results.Text("No animals");
     }
     // Use LINQ to join all animal names into a single string
-    var animalNames = string.Join(", ", animals.Select(animal => animal.Name));
+    var animalNames = string.Join(", ", animals.Select(animal => $"{animal.Name} who is a {animal.GetType().Name}"));
 
-    return Results.Json(animalNames);
+    return Results.Text(animalNames);
 })
 .WithName("GetAnimals")
 .WithOpenApi();
